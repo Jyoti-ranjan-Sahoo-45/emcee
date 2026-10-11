@@ -73,12 +73,12 @@ function Navbar() {
           <Link
             to="/"
             onClick={closeMobileMenu}
-            className="flex items-center shrink-0 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#be123c] focus-visible:ring-offset-4"
+            className="flex items-center shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#be123c] focus-visible:ring-offset-4"
           >
             <img
               src={logo}
               alt="Trupti Shah - Emcee and Anchor"
-              className="h-[58px] w-auto max-w-[240px] object-contain rounded-md shadow-[0_7px_20px_rgba(190,24,93,0.18)] ring-2 ring-white transition-transform duration-300 hover:scale-[1.03] sm:h-[64px] lg:h-[70px]"
+              className="h-[56px] w-auto max-w-[240px] object-contain transition-transform duration-300 hover:scale-[1.02] sm:h-[62px] lg:h-[68px]"
             />
           </Link>
 

@@ -10,8 +10,10 @@ import {
 } from "lucide-react";
 
 import aboutImage from "../assets/pic4.jpeg";
+import { usePageData } from "../common/useWpData";
 
 function AboutSection() {
+  const pageData = usePageData("about");
   return (
     <motion.section
       initial={{ opacity: 0, y: 32 }}
@@ -47,7 +49,7 @@ function AboutSection() {
             {/* Main image */}
             <div className="relative z-10 h-[460px] overflow-hidden rounded-[120px_120px_18px_18px] border-[6px] border-white bg-white shadow-[0_25px_60px_rgba(72,25,40,0.14)] sm:h-[520px]">
               <img
-                src={aboutImage}
+                src={pageData?.about_image || aboutImage}
                 alt="Trupti Shah - Professional Emcee"
                 className="h-full w-full object-cover transition-transform duration-1000 hover:scale-105"
               />

@@ -10,7 +10,10 @@ import {
 import { Link } from "react-router-dom";
 import heroImage from "../assets/anchor.webp";
 import { Helmet } from "react-helmet-async";
+import { usePageData } from "../common/useWpData";
+
 function HeroSection() {
+  const pageData = usePageData("home");
   return (
 <>
 <Helmet>
@@ -138,30 +141,39 @@ function HeroSection() {
               </span>
 
               <span className="text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-rose-600">
-                Professional Emcee & Event Host
+                {pageData?.hero_badge || "Professional Emcee & Event Host"}
               </span>
             </motion.div>
 
             {/* Heading */}
-            <motion.h1
-  initial={{ opacity: 0, y: 25 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.75, delay: 0.1 }}
-  className="text-5xl sm:text-6xl lg:text-6xl xl:text-7xl font-medium font-serif tracking-[-0.04em] leading-[1.02]"
->
-  Wedding Emcee &amp;
-  <br />
-
-  <span className="bg-gradient-to-r from-pink-500 via-rose-500 to-red-600 bg-clip-text text-transparent">
-    Sangeet Anchor
-  </span>
-
-  <br />
-
-  <span className="text-slate-900">
-    in Mumbai
-  </span>
-</motion.h1>
+            {pageData?.hero_title ? (
+              <motion.h1
+                initial={{ opacity: 0, y: 25 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.75, delay: 0.1 }}
+                className="text-5xl sm:text-6xl lg:text-6xl xl:text-7xl font-medium font-serif tracking-[-0.04em] leading-[1.02]"
+              >
+                <span className="bg-gradient-to-r from-pink-500 via-rose-500 to-red-600 bg-clip-text text-transparent">
+                  {pageData.hero_title}
+                </span>
+              </motion.h1>
+            ) : (
+              <motion.h1
+                initial={{ opacity: 0, y: 25 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.75, delay: 0.1 }}
+                className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-medium font-serif tracking-[-0.04em] text-slate-900"
+                style={{ lineHeight: 1.08 }}
+              >
+                <span className="block">Wedding Emcee &amp;</span>
+                <span className="block bg-gradient-to-r from-pink-500 via-rose-500 to-red-600 bg-clip-text text-transparent">
+                  Sangeet Anchor
+                </span>
+                <span className="block text-slate-900">
+                  in Mumbai
+                </span>
+              </motion.h1>
+            )}
 
             {/* Description */}
             <motion.p
@@ -170,10 +182,11 @@ function HeroSection() {
               transition={{ duration: 0.7, delay: 0.25 }}
               className="mt-4 max-w-xl text-sm sm:text-base lg:text-lg leading-7 sm:leading-8 text-slate-500"
             >
-              Meet <strong className="font-semibold text-slate-800">
-                Trupti Shah
-              </strong>
-            , a professional emcee and anchor based in Mumbai who brings confidence, warmth and vibrant energy to weddings, sangeet, celebrations and unforgettable occasions.
+              {pageData?.hero_description || (
+                <>
+                  Meet <strong className="font-semibold text-slate-800">Trupti Shah</strong>, a professional emcee and anchor based in Mumbai who brings confidence, warmth and vibrant energy to weddings, sangeet, celebrations and unforgettable occasions.
+                </>
+              )}
             </motion.p>
 
             {/* Buttons */}
@@ -276,7 +289,7 @@ function HeroSection() {
               <div className="relative overflow-hidden rounded-[30px] border border-white/80 bg-white p-2 shadow-[0_30px_80px_rgba(190,24,93,0.15)]">
 
                 <img
-                  src={heroImage}
+                  src={pageData?.hero_image || heroImage}
                   alt="Trupti Shah - Professional Emcee"
                   className="w-full aspect-[4/5] object-cover rounded-[24px]"
                 />

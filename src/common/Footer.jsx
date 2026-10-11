@@ -7,8 +7,10 @@ import {
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.jpg";
+import { useSiteOptions } from "./useWpData";
 
 function Footer() {
+  const options = useSiteOptions();
   const services = [
    
    
@@ -73,7 +75,7 @@ function Footer() {
             {/* Social */}
             <div className="flex items-center gap-3 mt-7">
               <a
-                href="https://www.facebook.com/WeddingSangeetChoreographer/"
+                href={options.facebook}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Facebook"
@@ -83,7 +85,7 @@ function Footer() {
               </a>
 
               <a
-                href="https://www.instagram.com/truptieventplanner/"
+                href={options.instagram}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Instagram"
@@ -93,13 +95,13 @@ function Footer() {
               </a>
 
               <a
-                href="https://www.youtube.com/user/mistyraj/videos"
+                href={options.youtube}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="YouTube"
                 className="flex h-10 w-10 items-center justify-center rounded-full border border-[#6f1d3b] bg-[#190a10] text-[#fda4af] transition-all duration-300 hover:border-[#fb7185] hover:bg-[#be123c] hover:text-white"
               >
-                <FaYoutube size={16} />
+                <FaYoutube size={17} />
               </a>
             </div>
           </div>
@@ -198,7 +200,7 @@ function Footer() {
 
               {/* Email */}
               <a
-                href="mailto:info@exoticweddingplanner.com"
+                href={`mailto:${options.email}`}
                 className="flex items-start gap-3 group"
               >
                 <Mail
@@ -207,13 +209,13 @@ function Footer() {
                 />
 
                 <span className="break-all text-sm leading-6 text-[#bd8798] transition-colors group-hover:text-[#fda4af]">
-                  info@exoticweddingplanner.com
+                  {options.email}
                 </span>
               </a>
 
               {/* Phone */}
               <a
-                href="tel:+919820359087"
+                href={`tel:${options.phone}`}
                 className="flex items-start gap-3 group"
               >
                 <Phone
@@ -222,32 +224,21 @@ function Footer() {
                 />
 
                 <span className="text-sm leading-6 text-[#bd8798] transition-colors group-hover:text-[#fda4af]">
-                  +91 9820359087
+                  {options.phone}
                 </span>
               </a>
 
               {/* Address */}
-              <a
-                href="https://goo.gl/maps/wYTfLyLiuoEeLV5f7"
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-start gap-3 group"
-              >
+              <div className="flex items-start gap-3 group">
                 <MapPin
                   size={19}
                   className="mt-0.5 shrink-0 text-[#fb7185] transition-colors group-hover:text-white"
                 />
 
                 <span className="text-sm leading-6 text-[#bd8798] transition-colors group-hover:text-[#fda4af]">
-                  Studio 10, 10th Floor,
-                  <br />
-                  Navjivan Commercial Bldg No 3,
-                  <br />
-                  Grant Road (E), Mumbai,
-                  <br />
-                  India
+                  {options.address}
                 </span>
-              </a>
+              </div>
 
             </div>
           </div>

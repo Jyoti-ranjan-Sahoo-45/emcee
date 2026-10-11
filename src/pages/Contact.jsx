@@ -10,34 +10,61 @@ import {
   Send,
   CheckCircle2,
 } from "lucide-react";
+import { useSiteOptions, usePageData } from "../common/useWpData";
 
 function Contact() {
+  const options = useSiteOptions();
+  const pageData = usePageData("contact");
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setStatusMessage("");
 
-    const formData = new FormData(e.currentTarget);
-    const message = `New Event Enquiry
+    const formEl = e.currentTarget;
+    const formData = new FormData(formEl);
 
-Name: ${formData.get("name")}
-Phone: ${formData.get("phone")}
-Email: ${formData.get("email")}
-Event Type: ${formData.get("eventType")}
-Event Date: ${formData.get("eventDate") || "Not specified"}
-Event Location: ${formData.get("eventLocation") || "Not specified"}
-Details: ${formData.get("details")}`;
+    const payload = {
+      name: formData.get("name") || "",
+      phone: formData.get("phone") || "",
+      email: formData.get("email") || "",
+      eventType: formData.get("eventType") || "",
+      eventDate: formData.get("eventDate") || "Not specified",
+      eventLocation: formData.get("eventLocation") || "Not specified",
+      details: formData.get("details") || "",
+    };
 
+    const message = `New Event Enquiry\n\nName: ${payload.name}\nPhone: ${payload.phone}\nEmail: ${payload.email}\nEvent Type: ${payload.eventType}\nEvent Date: ${payload.eventDate}\nEvent Location: ${payload.eventLocation}\nDetails: ${payload.details}`;
+
+    try {
+      await fetch("/wp-json/trupti/v1/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+    } catch (err) {
+      console.warn("Contact API dispatch note:", err);
+    }
+
+    // WhatsApp backup notification
     window.open(
-      `https://wa.me/919820359087?text=${encodeURIComponent(message)}`,
+      `https://wa.me/${options.whatsapp}?text=${encodeURIComponent(message)}`,
       "_blank",
       "noopener,noreferrer",
     );
+
     setSubmitted(true);
+    setStatusMessage(`Thank you! Your enquiry has been sent to ${options.email}.`);
+    formEl.reset();
+    setLoading(false);
 
     setTimeout(() => {
       setSubmitted(false);
-    }, 3000);
+      setStatusMessage("");
+    }, 6000);
   };
 
   return (
@@ -126,7 +153,7 @@ Details: ${formData.get("details")}`;
               {/* Contact Details */}
               <div className="mt-10 space-y-6">
                 <a
-                  href="mailto:info@exoticweddingplanner.com"
+                  href={`mailto:${options.email}`}
                   className="group flex items-start gap-4"
                 >
                   <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-pink-400/20 bg-pink-500/10 text-pink-400 transition group-hover:bg-pink-500/20">
@@ -138,13 +165,13 @@ Details: ${formData.get("details")}`;
                       Email
                     </p>
                     <p className="mt-1 text-sm text-white/80 transition group-hover:text-pink-300">
-                      info@exoticweddingplanner.com
+                      {options.email}
                     </p>
                   </div>
                 </a>
 
                 <a
-                  href="tel:+919820359087"
+                  href={`tel:${options.phone}`}
                   className="group flex items-start gap-4"
                 >
                   <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-pink-400/20 bg-pink-500/10 text-pink-400 transition group-hover:bg-pink-500/20">
@@ -156,17 +183,12 @@ Details: ${formData.get("details")}`;
                       Phone
                     </p>
                     <p className="mt-1 text-sm text-white/80 transition group-hover:text-pink-300">
-                      +91 9820359087
+                      {options.phone}
                     </p>
                   </div>
                 </a>
 
-                <a
-                  href="https://goo.gl/maps/wYTfLyLiuoEeLV5f7"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-start gap-4"
-                >
+                <div className="group flex items-start gap-4">
                   <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-pink-400/20 bg-pink-500/10 text-pink-400 transition group-hover:bg-pink-500/20">
                     <MapPin size={19} />
                   </div>
@@ -177,14 +199,10 @@ Details: ${formData.get("details")}`;
                     </p>
 
                     <p className="mt-1 text-sm leading-6 text-white/80 transition group-hover:text-pink-300">
-                      Studio 10, 10th Floor,
-                      <br />
-                      Navjivan Commercial Bldg No 3,
-                      <br />
-                      Grant Road (E), Mumbai, India
+                      {options.address}
                     </p>
                   </div>
-                </a>
+                </div>
               </div>
 
               {/* Availability */}
@@ -346,9 +364,12 @@ Details: ${formData.get("details")}`;
               {/* Submit */}
               <button
                 type="submit"
-                className="group flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-pink-600 via-rose-500 to-red-600 px-6 py-4 text-sm font-semibold text-white shadow-lg shadow-pink-200/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-pink-200/60"
+                disabled={loading}
+                className="group flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-pink-600 via-rose-500 to-red-600 px-6 py-4 text-sm font-semibold text-white shadow-lg shadow-pink-200/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-pink-200/60 disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                {submitted ? (
+                {loading ? (
+                  <span>Sending Enquiry...</span>
+                ) : submitted ? (
                   <>
                     <CheckCircle2 size={18} />
                     Enquiry Sent
@@ -363,6 +384,12 @@ Details: ${formData.get("details")}`;
                   </>
                 )}
               </button>
+
+              {statusMessage && (
+                <div className="mt-3 rounded-xl border border-green-200 bg-green-50 p-3 text-center text-xs font-medium text-green-800">
+                  {statusMessage}
+                </div>
+              )}
             </form>
           </motion.div>
         </div>

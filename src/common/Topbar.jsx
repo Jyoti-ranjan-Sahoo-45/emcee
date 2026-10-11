@@ -2,9 +2,11 @@
 import React, { useEffect, useState } from "react";
 import { Phone, Mail } from "lucide-react";
 import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
+import { useSiteOptions } from "./useWpData";
 
 function Topbar() {
   const [showTopbar, setShowTopbar] = useState(true);
+  const options = useSiteOptions();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,7 +27,7 @@ function Topbar() {
 
   return (
     <div
-      className={`w-full bg-[#2c0404] text-white transition-all duration-500 ease-in-out ${
+      className={`w-full bg-[#1e0a13] border-b border-pink-950/20 text-white/95 transition-all duration-500 ease-in-out ${
         showTopbar
           ? "max-h-20 opacity-100"
           : "max-h-0 opacity-0 overflow-hidden"
@@ -37,26 +39,26 @@ function Topbar() {
           {/* Contact Details */}
           <div className="flex items-center gap-5 text-sm">
             <a
-              href="tel:+919820359087"
+              href={`tel:${options.phone}`}
               className="flex items-center gap-2 hover:text-amber-400 transition-colors duration-300"
             >
               <Phone size={15} />
-              <span>+91 9820359087</span>
+              <span>{options.phone}</span>
             </a>
 
             <a
-              href="mailto:info@exoticweddingplanner.com"
+              href={`mailto:${options.email}`}
               className="hidden sm:flex items-center gap-2 hover:text-amber-400 transition-colors duration-300"
             >
               <Mail size={15} />
-              <span>info@exoticweddingplanner.com</span>
+              <span>{options.email}</span>
             </a>
           </div>
 
           {/* Social Media */}
           <div className="flex items-center gap-3">
             <a
-              href="https://www.facebook.com/WeddingSangeetChoreographer/"
+              href={options.facebook}
               target="_blank"
               rel="noreferrer"
               aria-label="Facebook"
@@ -66,7 +68,7 @@ function Topbar() {
             </a>
 
             <a
-              href="https://www.instagram.com/truptieventplanner/"
+              href={options.instagram}
               target="_blank"
               rel="noreferrer"
               aria-label="Instagram"
@@ -76,7 +78,7 @@ function Topbar() {
             </a>
 
             <a
-              href="https://www.youtube.com/user/mistyraj/videos"
+              href={options.youtube}
               target="_blank"
               rel="noreferrer"
               aria-label="YouTube"

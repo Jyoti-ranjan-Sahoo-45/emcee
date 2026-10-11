@@ -23,10 +23,13 @@ import HaldiMehendiAnchor from './Services/HaldiMehendiAnchor'
 import MameruCeremonyHosting from './Services/MameruCeremonyHosting'
 import BirthdayPartyHost from './Services/BirthdayPartyHost'
 import AnniversaryPartyEmcee from './Services/AnniversaryPartyEmcee'
-function App() {
+import { useSiteOptions } from './common/useWpData'
 
- const handleWhatsAppClick = () => {
-    const phoneNumber = "919820359087";
+function App() {
+  const options = useSiteOptions();
+
+  const handleWhatsAppClick = () => {
+    const phoneNumber = options.whatsapp;
     const message = encodeURIComponent("Hello Trupti Shah");
 
     const isMobile =
@@ -79,18 +82,18 @@ function App() {
     <Route path="/contact" element={<Contact/>} />
     <Route path="/services" element={<Services/>} />
     <Route path="/gallery" element={<Gallery/>} />
-    <Route path="services/corporate-event-emcee" element={<CorporateEmcee/>} />
-    <Route path="services/sangeet-anchor-mumbai" element={<SangeetAnchor/>} />
-    <Route path="services/haldi-mehendi-anchoring-mumbai" element={<HaldiMehendiAnchor/>} />
-    <Route path="services/mameru-ceremony-hosting" element={<MameruCeremonyHosting/>} />
-    <Route path="services/birthday-party-hostess" element={<BirthdayPartyHost/>} />
-    <Route path="services/anniversary-party-emcee" element={<AnniversaryPartyEmcee/>} />
+    <Route path="/services/corporate-event-emcee" element={<CorporateEmcee/>} />
+    <Route path="/services/sangeet-anchor-mumbai" element={<SangeetAnchor/>} />
+    <Route path="/services/haldi-mehendi-anchoring-mumbai" element={<HaldiMehendiAnchor/>} />
+    <Route path="/services/mameru-ceremony-hosting" element={<MameruCeremonyHosting/>} />
+    <Route path="/services/birthday-party-hostess" element={<BirthdayPartyHost/>} />
+    <Route path="/services/anniversary-party-emcee" element={<AnniversaryPartyEmcee/>} />
 
-    <Route path="services/awards-gala-hostess" element={<AwardsGalaEmcee/>} />
-    <Route path="services/product-launch-emcee" element={<OpeningCeremonyOfficialLauchEmcee/>} />
-    <Route path="services/outdoor-sports-emcee" element={<OutdoorSportsFamilyDayEmcee/>} />
+    <Route path="/services/awards-gala-hostess" element={<AwardsGalaEmcee/>} />
+    <Route path="/services/product-launch-emcee" element={<OpeningCeremonyOfficialLauchEmcee/>} />
+    <Route path="/services/outdoor-sports-emcee" element={<OutdoorSportsFamilyDayEmcee/>} />
 
-    <Route path="services/wedding-emcee-mumbai" element={<WeddingsEmcee/>} />
+    <Route path="/services/wedding-emcee-mumbai" element={<WeddingsEmcee/>} />
   </Routes>
   <Footer/>
   </>
