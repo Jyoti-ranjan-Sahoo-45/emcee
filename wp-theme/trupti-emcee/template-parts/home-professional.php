@@ -24,7 +24,7 @@
       </div>
 
       <h2 class="font-serif text-3xl font-medium leading-tight text-[#260d16] sm:text-4xl lg:text-5xl">
-        Professional Emcee &amp; Anchor in{" "}
+        Professional Emcee &amp; Anchor in 
         <span class="bg-gradient-to-r from-[#c2185b] to-[#e11d48] bg-clip-text text-transparent">
           Mumbai
         </span>

@@ -4,7 +4,7 @@ Theme URI: https://truptiemcee.com
 Author: Trupti Shah
 Author URI: https://truptiemcee.com
 Description: Official Premium WordPress Theme for Trupti Shah - Sangeet Anchor & Wedding Emcee in Mumbai. Fully optimized for All in One SEO, performance, and lead generation.
-Version: 1.2.0
+Version: 1.2.1
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -35,5 +35,25 @@ h2 br + br {
     font-size: 2.5rem !important;
     line-height: 1.15 !important;
   }
+}
+
+/* =========================================================
+   Desktop Navigation Services Dropdown Hover Fix
+========================================================= */
+#desktop-services-group {
+  position: relative;
+}
+
+#desktop-services-group:hover > div,
+#desktop-services-group:focus-within > div {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translate(-50%, 0) !important;
+  pointer-events: auto !important;
+}
+
+#desktop-services-group:hover a span.transition-transform,
+#desktop-services-group:focus-within a span.transition-transform {
+  transform: rotate(180deg);
 }
 

@@ -41,7 +41,7 @@ $testimonials = array(
       </div>
 
       <h2 class="font-serif text-3xl font-medium tracking-tight text-white sm:text-4xl lg:text-5xl">
-        Words From Those Who{" "}
+        Words From Those Who 
         <span class="bg-gradient-to-r from-pink-400 via-rose-400 to-red-500 bg-clip-text text-transparent">
           Celebrated With Us
         </span>

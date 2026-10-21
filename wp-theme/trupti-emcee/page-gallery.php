@@ -45,7 +45,7 @@ $gallery_count = 48;
       </span>
 
       <h1 class="mt-4 font-serif text-4xl font-medium tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
-        Moments From The{" "}
+        Moments From The 
         <span class="bg-gradient-to-r from-pink-600 via-rose-600 to-red-600 bg-clip-text text-transparent">
           Stage
         </span>

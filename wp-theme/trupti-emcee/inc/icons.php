@@ -106,3 +106,22 @@ function trupti_icon($name, $class = '', $size = 20) {
             return '';
     }
 }
+
+/**
+ * Customize Front Page Title for Yoast SEO & WordPress
+ */
+add_filter('wpseo_title', function($title) {
+    if (is_front_page()) {
+        return 'Trupti Shah | Professional Emcee & Anchor in Mumbai';
+    }
+    return $title;
+}, 9999);
+
+add_filter('document_title_parts', function($parts) {
+    if (is_front_page()) {
+        $parts['title'] = 'Trupti Shah';
+        $parts['tagline'] = 'Professional Emcee & Anchor in Mumbai';
+    }
+    return $parts;
+}, 9999);
+

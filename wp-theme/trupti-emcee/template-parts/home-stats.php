@@ -18,7 +18,7 @@
         Experience That Speaks
       </span>
       <h2 class="mt-2 text-2xl font-bold text-white sm:text-3xl">
-        Creating Moments That{" "}
+        Creating Moments That 
         <span class="bg-gradient-to-r from-pink-400 via-rose-400 to-red-500 bg-clip-text text-transparent">
           Matter
         </span>

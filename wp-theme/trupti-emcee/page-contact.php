@@ -47,7 +47,7 @@ $address = get_option('trupti_address', 'Studio 10, 10th Floor, Navjivan Commerc
       </span>
 
       <h1 class="mt-4 font-serif text-4xl font-medium tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
-        Let's Make Your Event{" "}
+        Let's Make Your Event 
         <span class="bg-gradient-to-r from-pink-600 via-rose-600 to-red-600 bg-clip-text text-transparent">
           Unforgettable
         </span>

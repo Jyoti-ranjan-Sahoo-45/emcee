@@ -67,10 +67,10 @@ $qualities = array(
           </div>
 
           <h1 class="mt-6 font-serif text-4xl font-medium leading-[1.08] text-slate-900 sm:text-5xl lg:text-6xl">
-            Bringing Energy, Elegance &amp;{" "}
+            Bringing Energy, Elegance &amp; 
             <span class="bg-gradient-to-r from-pink-600 via-rose-600 to-red-600 bg-clip-text text-transparent">
               Connection
-            </span>{" "}
+            </span> 
             to Every Stage
           </h1>
 

@@ -50,9 +50,22 @@ function trupti_enqueue_scripts() {
     }
 
     // Enqueue Theme Style.css
-    wp_enqueue_style('trupti-theme-style', get_stylesheet_uri(), array('trupti-main-styles'), '1.1.0');
+    wp_enqueue_style('trupti-theme-style', get_stylesheet_uri(), array('trupti-main-styles'), '1.2.1');
 }
 add_action('wp_enqueue_scripts', 'trupti_enqueue_scripts');
+
+/**
+ * Customize Front Page Title to prevent "Home - Trupti Shah"
+ */
+function trupti_custom_document_title_parts($title_parts) {
+    if (is_front_page()) {
+        $title_parts['title']   = 'Trupti Shah';
+        $title_parts['tagline'] = 'Professional Emcee & Anchor in Mumbai';
+    }
+    return $title_parts;
+}
+add_filter('document_title_parts', 'trupti_custom_document_title_parts', 20);
+
 
 /**
  * Register Site Settings in WP Admin
