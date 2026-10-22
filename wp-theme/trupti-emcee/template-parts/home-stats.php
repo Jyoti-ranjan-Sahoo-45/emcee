@@ -4,6 +4,15 @@
  *
  * @package Trupti_Emcee
  */
+
+$s1_val = get_field('stat_1_val') ?: '10+';
+$s1_lbl = get_field('stat_1_lbl') ?: 'Years Experience';
+$s2_val = get_field('stat_2_val') ?: '500+';
+$s2_lbl = get_field('stat_2_lbl') ?: 'Events Hosted';
+$s3_val = get_field('stat_3_val') ?: '50K+';
+$s3_lbl = get_field('stat_3_lbl') ?: 'Guests Entertained';
+$s4_val = get_field('stat_4_val') ?: '5.0';
+$s4_lbl = get_field('stat_4_lbl') ?: 'Client Rating';
 ?>
 
 <section class="relative overflow-hidden bg-[#16080d] py-10 sm:py-12">
@@ -36,10 +45,10 @@
           </div>
           <div class="text-left">
             <div class="bg-gradient-to-r from-pink-400 via-rose-400 to-red-500 bg-clip-text text-2xl font-bold leading-none text-transparent sm:text-3xl">
-              10+
+              <?php echo esc_html($s1_val); ?>
             </div>
             <p class="mt-1.5 text-[10px] font-medium uppercase tracking-[0.1em] text-white/50 sm:text-xs">
-              Years Experience
+              <?php echo esc_html($s1_lbl); ?>
             </p>
           </div>
         </div>
@@ -51,10 +60,10 @@
           </div>
           <div class="text-left">
             <div class="bg-gradient-to-r from-pink-400 via-rose-400 to-red-500 bg-clip-text text-2xl font-bold leading-none text-transparent sm:text-3xl">
-              500+
+              <?php echo esc_html($s2_val); ?>
             </div>
             <p class="mt-1.5 text-[10px] font-medium uppercase tracking-[0.1em] text-white/50 sm:text-xs">
-              Events Hosted
+              <?php echo esc_html($s2_lbl); ?>
             </p>
           </div>
         </div>
@@ -66,10 +75,10 @@
           </div>
           <div class="text-left">
             <div class="bg-gradient-to-r from-pink-400 via-rose-400 to-red-500 bg-clip-text text-2xl font-bold leading-none text-transparent sm:text-3xl">
-              50K+
+              <?php echo esc_html($s3_val); ?>
             </div>
             <p class="mt-1.5 text-[10px] font-medium uppercase tracking-[0.1em] text-white/50 sm:text-xs">
-              Guests Entertained
+              <?php echo esc_html($s3_lbl); ?>
             </p>
           </div>
         </div>
@@ -81,10 +90,10 @@
           </div>
           <div class="text-left">
             <div class="bg-gradient-to-r from-pink-400 via-rose-400 to-red-500 bg-clip-text text-2xl font-bold leading-none text-transparent sm:text-3xl">
-              5.0
+              <?php echo esc_html($s4_val); ?>
             </div>
             <p class="mt-1.5 text-[10px] font-medium uppercase tracking-[0.1em] text-white/50 sm:text-xs">
-              Client Rating
+              <?php echo esc_html($s4_lbl); ?>
             </p>
           </div>
         </div>

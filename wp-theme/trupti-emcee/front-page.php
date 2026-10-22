@@ -7,15 +7,24 @@
 
 get_header();
 
-// Disable wpautop on front-page to prevent stray paragraph and break injection
-// Support the_content() for Elementor & WordPress editor compatibility
-if (have_posts()) :
+$is_elementor = false;
+if (class_exists('\\Elementor\\Plugin')) {
+    $elementor_data = get_post_meta(get_the_ID(), '_elementor_data', true);
+    if (!empty($elementor_data) && $elementor_data !== '[]') {
+        $is_elementor = \Elementor\Plugin::$instance->db->is_built_with_elementor(get_the_ID());
+    }
+    if (isset($_GET['elementor-preview'])) {
+        $is_elementor = true;
+    }
+}
+
+if ($is_elementor) {
     while (have_posts()) : the_post();
         the_content();
     endwhile;
-endif;
-
-get_template_part('template-parts/home-sections');
+} else {
+    get_template_part('template-parts/home-sections');
+}
 
 get_footer();
 

@@ -125,3 +125,192 @@ add_filter('document_title_parts', function($parts) {
     return $parts;
 }, 9999);
 
+/**
+ * Enable WordPress Navigation Menus Support
+ */
+function trupti_enable_theme_menus() {
+    add_theme_support('menus');
+    register_nav_menus(array(
+        'primary' => __('Primary Header Menu', 'trupti-emcee'),
+        'footer'  => __('Footer Navigation Menu', 'trupti-emcee'),
+    ));
+}
+add_action('after_setup_theme', 'trupti_enable_theme_menus');
+
+/**
+ * Render Desktop Navigation using WordPress Menu
+ */
+function trupti_render_desktop_nav() {
+    $locations = get_nav_menu_locations();
+    if (!isset($locations['primary'])) {
+        return false;
+    }
+    $items = wp_get_nav_menu_items($locations['primary']);
+    if (empty($items)) {
+        return false;
+    }
+
+    $tree = array();
+    $children = array();
+    foreach ($items as $item) {
+        if ($item->menu_item_parent == 0) {
+            $tree[$item->ID] = $item;
+        } else {
+            $children[$item->menu_item_parent][] = $item;
+        }
+    }
+
+    echo '<div class="hidden lg:flex items-center gap-8">';
+    foreach ($tree as $parent_id => $item) {
+        $has_children = !empty($children[$parent_id]);
+        $title = esc_html($item->title);
+        $url   = esc_url($item->url);
+        $is_gallery = (stripos($title, 'gallery') !== false);
+
+        if ($has_children) {
+            ?>
+            <div class="relative group" id="desktop-services-group">
+                <a href="<?php echo $url; ?>" class="flex items-center gap-1.5 py-7 text-[13px] font-semibold uppercase tracking-[0.14em] text-[#5f2436] hover:text-[#be123c] transition-colors duration-300">
+                    <span><?php echo $title; ?></span>
+                    <span class="transition-transform duration-300 group-hover:rotate-180">
+                        <?php echo trupti_icon('chevron-down', '', 16); ?>
+                    </span>
+                </a>
+                <div class="absolute top-full left-1/2 -translate-x-1/2 w-[340px] rounded-xl border border-[#f3c6d5] bg-white p-2 shadow-[0_18px_40px_rgba(190,24,93,0.16)] transition-all duration-300 opacity-0 invisible -translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 pointer-events-none group-hover:pointer-events-auto">
+                    <a href="<?php echo $url; ?>" class="block rounded-lg px-4 py-3 text-sm font-semibold text-[#be123c] hover:bg-[#fff1f5] transition-colors">
+                        All <?php echo $title; ?>
+                    </a>
+                    <div class="my-1 h-px bg-[#f3c6d5]"></div>
+                    <?php foreach ($children[$parent_id] as $child) : ?>
+                        <a href="<?php echo esc_url($child->url); ?>" class="block rounded-lg px-4 py-2.5 text-sm text-[#6b3949] hover:bg-[#fff1f5] hover:text-[#be123c] transition-all duration-200">
+                            <?php echo esc_html($child->title); ?>
+                        </a>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <?php
+        } elseif ($is_gallery) {
+            ?>
+            <a href="<?php echo $url; ?>" class="rounded-full border border-[#be123c] bg-[#be123c] px-5 py-2.5 text-[13px] font-semibold uppercase tracking-[0.12em] text-white shadow-[0_6px_16px_rgba(190,24,93,0.22)] transition-all duration-300 hover:border-[#9f1239] hover:bg-[#9f1239] hover:shadow-[0_9px_22px_rgba(190,24,93,0.28)]">
+                <?php echo $title; ?>
+            </a>
+            <?php
+        } else {
+            ?>
+            <a href="<?php echo $url; ?>" class="text-[13px] font-semibold uppercase tracking-[0.14em] text-[#5f2436] hover:text-[#be123c] transition-colors duration-300">
+                <?php echo $title; ?>
+            </a>
+            <?php
+        }
+    }
+    echo '</div>';
+    return true;
+}
+
+/**
+ * Render Mobile Navigation using WordPress Menu
+ */
+function trupti_render_mobile_nav() {
+    $locations = get_nav_menu_locations();
+    if (!isset($locations['primary'])) {
+        return false;
+    }
+    $items = wp_get_nav_menu_items($locations['primary']);
+    if (empty($items)) {
+        return false;
+    }
+
+    $tree = array();
+    $children = array();
+    foreach ($items as $item) {
+        if ($item->menu_item_parent == 0) {
+            $tree[$item->ID] = $item;
+        } else {
+            $children[$item->menu_item_parent][] = $item;
+        }
+    }
+
+    echo '<div class="border-t border-[#f3c6d5] pt-4 pb-4 space-y-1">';
+    foreach ($tree as $parent_id => $item) {
+        $has_children = !empty($children[$parent_id]);
+        $title = esc_html($item->title);
+        $url   = esc_url($item->url);
+
+        if ($has_children) {
+            ?>
+            <div>
+                <button type="button" id="mobile-services-toggle" class="w-full flex items-center justify-between rounded-lg px-3 py-3 text-sm font-medium text-[#5f2436] hover:bg-[#fff1f5] hover:text-[#be123c]">
+                    <span><?php echo $title; ?></span>
+                    <span id="mobile-services-arrow" class="transition-transform duration-300">
+                        <?php echo trupti_icon('chevron-down', '', 17); ?>
+                    </span>
+                </button>
+                <div id="mobile-services-sublist" class="overflow-hidden transition-all duration-300 max-h-0 opacity-0">
+                    <div class="ml-3 mt-1 border-l border-[#f3c6d5] pl-3 space-y-1">
+                        <a href="<?php echo $url; ?>" class="block rounded-lg px-3 py-2 text-sm font-semibold text-[#be123c] hover:bg-[#fff1f5]">
+                            All <?php echo $title; ?>
+                        </a>
+                        <?php foreach ($children[$parent_id] as $child) : ?>
+                            <a href="<?php echo esc_url($child->url); ?>" class="block rounded-lg px-3 py-2 text-sm text-[#6b3949] hover:bg-[#fff1f5] hover:text-[#be123c]">
+                                <?php echo esc_html($child->title); ?>
+                            </a>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+            <?php
+        } else {
+            ?>
+            <a href="<?php echo $url; ?>" class="block rounded-lg px-3 py-3 text-sm font-medium text-[#5f2436] hover:bg-[#fff1f5] hover:text-[#be123c]">
+                <?php echo $title; ?>
+            </a>
+            <?php
+        }
+    }
+    echo '</div>';
+    return true;
+}
+
+/**
+ * Register ACF Field Groups for Homepage
+ */
+add_action('acf/init', function() {
+    if (!function_exists('acf_add_local_field_group')) {
+        return;
+    }
+
+    acf_add_local_field_group(array(
+        'key' => 'group_home_cms',
+        'title' => 'Homepage Sections (Trupti Shah)',
+        'fields' => array(
+            array('key' => 'tab_hero', 'label' => 'Hero Banner', 'type' => 'tab'),
+            array('key' => 'f_hero_badge', 'label' => 'Hero Badge Text', 'name' => 'hero_badge', 'type' => 'text', 'default_value' => 'Professional Emcee & Event Host'),
+            array('key' => 'f_hero_title', 'label' => 'Hero Title Override', 'name' => 'hero_title', 'type' => 'text'),
+            array('key' => 'f_hero_desc', 'label' => 'Hero Bio Description', 'name' => 'hero_description', 'type' => 'textarea', 'rows' => 3),
+            array('key' => 'f_hero_img', 'label' => 'Hero Image (URL or Media)', 'name' => 'hero_image', 'type' => 'image', 'return_format' => 'url'),
+
+            array('key' => 'tab_stats', 'label' => 'Stats Counters', 'type' => 'tab'),
+            array('key' => 'f_s1_v', 'label' => 'Stat 1 Value', 'name' => 'stat_1_val', 'type' => 'text', 'default_value' => '10+'),
+            array('key' => 'f_s1_l', 'label' => 'Stat 1 Label', 'name' => 'stat_1_lbl', 'type' => 'text', 'default_value' => 'Years Experience'),
+            array('key' => 'f_s2_v', 'label' => 'Stat 2 Value', 'name' => 'stat_2_val', 'type' => 'text', 'default_value' => '500+'),
+            array('key' => 'f_s2_l', 'label' => 'Stat 2 Label', 'name' => 'stat_2_lbl', 'type' => 'text', 'default_value' => 'Events Hosted'),
+            array('key' => 'f_s3_v', 'label' => 'Stat 3 Value', 'name' => 'stat_3_val', 'type' => 'text', 'default_value' => '50K+'),
+            array('key' => 'f_s3_l', 'label' => 'Stat 3 Label', 'name' => 'stat_3_lbl', 'type' => 'text', 'default_value' => 'Guests Entertained'),
+            array('key' => 'f_s4_v', 'label' => 'Stat 4 Value', 'name' => 'stat_4_val', 'type' => 'text', 'default_value' => '5.0'),
+            array('key' => 'f_s4_l', 'label' => 'Stat 4 Label', 'name' => 'stat_4_lbl', 'type' => 'text', 'default_value' => 'Client Rating'),
+
+            array('key' => 'tab_about', 'label' => 'About Preview', 'type' => 'tab'),
+            array('key' => 'f_about_img', 'label' => 'About Section Image', 'name' => 'about_image', 'type' => 'image', 'return_format' => 'url'),
+        ),
+        'location' => array(
+            array(
+                array('param' => 'page_type', 'operator' => '==', 'value' => 'front_page'),
+            ),
+            array(
+                array('param' => 'page', 'operator' => '==', 'value' => '7'),
+            ),
+        ),
+    ));
+});
+
+

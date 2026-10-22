@@ -81,6 +81,7 @@ $theme_uri = get_template_directory_uri();
       </a>
 
       <!-- Desktop Navigation -->
+      <?php if (!function_exists('trupti_render_desktop_nav') || !trupti_render_desktop_nav()) : ?>
       <div class="hidden lg:flex items-center gap-8">
         <a href="<?php echo esc_url(home_url('/')); ?>" class="text-[13px] font-semibold uppercase tracking-[0.14em] text-[#5f2436] hover:text-[#be123c] transition-colors duration-300">
           Home
@@ -146,6 +147,7 @@ $theme_uri = get_template_directory_uri();
           Gallery
         </a>
       </div>
+      <?php endif; ?>
 
       <!-- Mobile Menu Button -->
       <button
@@ -162,6 +164,7 @@ $theme_uri = get_template_directory_uri();
 
     <!-- Mobile Navigation Drawer -->
     <div id="mobile-menu-drawer" class="lg:hidden overflow-hidden transition-all duration-300 max-h-0 opacity-0">
+      <?php if (!function_exists('trupti_render_mobile_nav') || !trupti_render_mobile_nav()) : ?>
       <div class="border-t border-[#f3c6d5] pt-4 pb-4 space-y-1">
         <a href="<?php echo esc_url(home_url('/')); ?>" class="block rounded-lg px-3 py-3 text-sm font-medium text-[#5f2436] hover:bg-[#fff1f5] hover:text-[#be123c]">
           Home
@@ -224,6 +227,7 @@ $theme_uri = get_template_directory_uri();
           Gallery
         </a>
       </div>
+      <?php endif; ?>
     </div>
 
   </div>
